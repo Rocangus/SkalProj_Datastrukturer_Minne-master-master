@@ -29,7 +29,6 @@ namespace SkalProj_Datastrukturer_Minne
         /// <param name="args"></param>
         static void Main()
         {
-           
             while (true)
             {
 
@@ -260,6 +259,10 @@ namespace SkalProj_Datastrukturer_Minne
             return x;
         }
 
+        /// <summary>
+        /// This method checks whether the string entered into the program has matching paranthesis or not.
+        /// It prints text announcing the result of the check to the console.
+        /// </summary>
         static void CheckParanthesis()
         {
             /*
@@ -267,8 +270,54 @@ namespace SkalProj_Datastrukturer_Minne
              * Example of correct: (()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 };
              * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
              */
-             Regex test = new Regex(@"\p{Ps}"); // Any opening bracket
+            var wellFormed = true;
+            string input;
+            var characterPairs = new Dictionary<char, char>() { { '}', '{' }, { ')', '(' }, { ']', '[' } };
+            var openingBrackets = new Stack<char>();
+            PrintCheckParanthesisInstructions();
+            while (!String.IsNullOrEmpty(input = Console.ReadLine()))
+            {
+                wellFormed = CheckIfOpeningAndClosingParanthesisMatch(wellFormed, input, characterPairs, openingBrackets);
+                PrintResult(wellFormed);
+            }
         }
 
+        private static void PrintCheckParanthesisInstructions()
+        {
+            Console.WriteLine("Enter a string with different kinds of paranthesis to make sure that each opening paranthesis is closed with the correct closing paranthesis or just hit enter to return to main menu.");
+        }
+
+        private static bool CheckIfOpeningAndClosingParanthesisMatch(bool wellFormed, string input, Dictionary<char, char> characterPairs, Stack<char> openingBrackets)
+        {
+            foreach (var c in input.ToCharArray())
+            {
+                if (characterPairs.ContainsValue(c))
+                {
+                    openingBrackets.Push(c);
+                }
+                if (characterPairs.ContainsKey(c))
+                {
+                    char result;
+                    characterPairs.TryGetValue(c, out result);
+                    if (!(characterPairs.ContainsValue(result) && result.Equals(openingBrackets.Pop())))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static void PrintResult(bool wellFormed)
+        {
+            if (wellFormed)
+            {
+                Console.WriteLine("The use of paranthesis is correct");
+            }
+            else
+            {
+                Console.WriteLine("The paranthesis do not match in the string.");
+            }
+        }
     }
 }
