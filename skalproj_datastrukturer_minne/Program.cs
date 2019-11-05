@@ -37,6 +37,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n2. Examine a Queue"
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
+                    + "\n5. RecursiveEven"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -62,6 +63,9 @@ namespace SkalProj_Datastrukturer_Minne
                     case '4':
                         CheckParanthesis();
                         break;
+                    case '5':
+                        RecursiveEvenManager();
+                        break;
                     /*
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
@@ -74,6 +78,7 @@ namespace SkalProj_Datastrukturer_Minne
                 }
             }
         }
+
 
         /// <summary>
         /// Examines the datastructure List
@@ -305,6 +310,7 @@ namespace SkalProj_Datastrukturer_Minne
                     }
                 }
             }
+            if (openingBrackets.Count > 0) { return false; }
             return true;
         }
 
@@ -318,6 +324,42 @@ namespace SkalProj_Datastrukturer_Minne
             {
                 Console.WriteLine("The paranthesis do not match in the string.");
             }
+        }
+
+        /// <summary>
+        /// A manager method for the recursive RecursiveEven(int n) method. It ensures the input to the method is valid.
+        /// </summary>
+        private static void RecursiveEvenManager()
+        {
+            PrintRecursiveEvenInstructions();
+            int n;
+            do
+            {
+                Console.WriteLine("Please enter a positive integer for n:");
+            } while (!int.TryParse(Console.ReadLine(), out n));
+            Console.WriteLine(RecursiveEven(n));
+        }
+
+        /// <summary>
+        /// Recursively computes the nth even number.
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        /// <exception cref="StackOverflowException">
+        /// Throws a StackOverflowException if the number of recursive calls exceeds what Localloc IL will allow.
+        /// </exception>
+        private static int RecursiveEven(int n)
+        {
+            if (n == 0)
+            {
+                return 0;
+            }
+            return RecursiveEven(n - 1) + 2;
+        }
+
+        private static void PrintRecursiveEvenInstructions()
+        {
+            Console.WriteLine("This uses a recursive method to calculate the zero-based nth even number.");
         }
     }
 }
