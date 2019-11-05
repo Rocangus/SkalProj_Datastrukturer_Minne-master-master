@@ -38,6 +38,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n3. Examine a Stack"
                     + "\n4. CheckParanthesis"
                     + "\n5. RecursiveEven"
+                    + "\n6. RecursiveFibbonacci"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -66,6 +67,9 @@ namespace SkalProj_Datastrukturer_Minne
                     case '5':
                         RecursiveEvenManager();
                         break;
+                    case '6':
+                        RecursiveFibonacciHandler();
+                        break;
                     /*
                      * Extend the menu to include the recursive 
                      * and iterative exercises.
@@ -78,6 +82,7 @@ namespace SkalProj_Datastrukturer_Minne
                 }
             }
         }
+
 
 
         /// <summary>
@@ -332,11 +337,7 @@ namespace SkalProj_Datastrukturer_Minne
         private static void RecursiveEvenManager()
         {
             PrintRecursiveEvenInstructions();
-            int n;
-            do
-            {
-                Console.WriteLine("Please enter a positive integer for n:");
-            } while (!int.TryParse(Console.ReadLine(), out n));
+            int n = GetPositiveInteger();
             Console.WriteLine(RecursiveEven(n));
         }
 
@@ -348,18 +349,40 @@ namespace SkalProj_Datastrukturer_Minne
         /// <exception cref="StackOverflowException">
         /// Throws a StackOverflowException if the number of recursive calls exceeds what Localloc IL will allow.
         /// </exception>
-        private static int RecursiveEven(int n)
-        {
-            if (n == 0)
-            {
-                return 0;
-            }
-            return RecursiveEven(n - 1) + 2;
-        }
 
         private static void PrintRecursiveEvenInstructions()
         {
             Console.WriteLine("This uses a recursive method to calculate the zero-based nth even number.");
         }
+        
+        private static int RecursiveEven(int n)
+        {
+            if (n == 0) { return 0; }
+            return RecursiveEven(n - 1) + 2;
+        }
+
+        private static int GetPositiveInteger()
+        {
+            int n;
+            do
+            {
+                Console.WriteLine("Please enter a positive integer for n:");
+            } while (!int.TryParse(Console.ReadLine(), out n));
+            return n;
+        }
+
+        private static void RecursiveFibonacciHandler()
+        {
+            Console.WriteLine("Calculates the zero-based nth Fibonacci number, recursively.");
+            int n = GetPositiveInteger();
+            Console.WriteLine(RecursiveFibonacci(n));
+        }
+
+        private static long RecursiveFibonacci(int n)
+        {
+            if ( n <= 1) { return 1; }
+            return RecursiveFibonacci(n - 1) + RecursiveFibonacci(n - 2);
+        }
+
     }
 }
