@@ -39,6 +39,7 @@ namespace SkalProj_Datastrukturer_Minne
                     + "\n4. CheckParanthesis"
                     + "\n5. RecursiveEven"
                     + "\n6. RecursiveFibbonacci"
+                    + "\n7. IterativeEven"
                     + "\n0. Exit the application");
                 char input = ' '; //Creates the character input to be used with the switch-case below.
                 try
@@ -69,6 +70,9 @@ namespace SkalProj_Datastrukturer_Minne
                         break;
                     case '6':
                         RecursiveFibonacciHandler();
+                        break;
+                    case '7':
+                        IterativeEvenHandler();
                         break;
                     /*
                      * Extend the menu to include the recursive 
@@ -336,7 +340,7 @@ namespace SkalProj_Datastrukturer_Minne
         /// </summary>
         private static void RecursiveEvenManager()
         {
-            PrintRecursiveEvenInstructions();
+            Console.WriteLine("Calculates the zero-based nth even number, recursively.");
             int n = GetPositiveInteger();
             Console.WriteLine(RecursiveEven(n));
         }
@@ -349,11 +353,6 @@ namespace SkalProj_Datastrukturer_Minne
         /// <exception cref="StackOverflowException">
         /// Throws a StackOverflowException if the number of recursive calls exceeds what Localloc IL will allow.
         /// </exception>
-
-        private static void PrintRecursiveEvenInstructions()
-        {
-            Console.WriteLine("This uses a recursive method to calculate the zero-based nth even number.");
-        }
         
         private static int RecursiveEven(int n)
         {
@@ -382,6 +381,23 @@ namespace SkalProj_Datastrukturer_Minne
         {
             if ( n <= 1) { return 1; }
             return RecursiveFibonacci(n - 1) + RecursiveFibonacci(n - 2);
+        }
+
+        private static void IterativeEvenHandler()
+        {
+            Console.WriteLine("Calculates the zero-based nth even number, iteratively.");
+            int n = GetPositiveInteger();
+            Console.WriteLine(IterativeEven(n));
+        }
+
+        private static int IterativeEven(int n)
+        {
+            int result = 0;
+            for (int i = 0; i < n; i++)
+            {
+                result += 2;
+            }
+            return result;
         }
 
     }
